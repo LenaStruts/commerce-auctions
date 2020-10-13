@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %} 
+{% load crispy_forms_tags %} 
+{% block body %}
+
+<h2>New Listing</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    {{ form.title|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    {{ form.starting_bid|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    {{ form.image|as_crispy_field }}
+                </div>
+                <div class="form-group">
+                    {{ form.category|as_crispy_field }}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    {{ form.description|as_crispy_field }}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="save btn btn-secondary">Save</button>
+    </form>
+
+{% endblock %}
