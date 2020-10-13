@@ -160,7 +160,7 @@ def watchlist_remove(request, pk):
 
 def bid(request, pk):
     listing_to_bid = get_object_or_404(Listing, pk=pk)
-    listing_to_bid_price = listing_to_bid.starting_bid
+    listing_to_bid_price = listing_to_bid.price
     if request.method == "POST":
         form = BidForm(request.POST)
         if form.is_valid():

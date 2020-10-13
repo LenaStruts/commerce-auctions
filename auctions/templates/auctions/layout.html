@@ -2,45 +2,64 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>{% block title %}Auctions{% endblock %}</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <h1>Auctions</h1>
-        <div>
-            {% if user.is_authenticated %}
-                Signed in as <strong>{{ user.username }}</strong>.
-            {% else %}
-                Not signed in.
-            {% endif %}
+
+<head>
+    <title>{% block title %}Auctions{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'auctions/styles.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #f3f3f3;">
+        <a class="navbar-brand" href="#" style="font-size: xx-large;">Auctions</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                {% url 'index' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                    <a class="nav-link" href="{{ url }}">Active Listings<span class="sr-only">(current)</span></a>
+                </li>
+                {% url 'categories' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                    <a class="nav-link" href="{{ url }}">Categories</a>
+                </li>
+                {% if user.is_authenticated %}
+                {% url 'watchlist' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                    <a class="nav-link" href="{{ url }}">Watchlist</a>
+                </li>
+                {% url 'new_listing' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                    <a class="nav-link" href="{{ url }}">Create Listing</a>
+                </li>
+                {% url 'logout' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                    <a class="nav-link" href="{{ url }}">Log Out</a>
+                </li>
+                {% else %}
+                {% url 'login' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                    <a class="nav-link" href="{{ url }}">Log In</a>
+                </li>
+                {% url 'register' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                    <a class="nav-link" href="{{ url }}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+            <span class="navbar-text">
+                {% if user.is_authenticated %} Signed in as <strong>{{ user.username }}</strong>. {% else %} Not signed in. {% endif %}
+            </span>
         </div>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'categories' %}">Categories</a>
-            </li>
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-            {% endif %}
-        </ul>
-        <hr>
-        {% block body %}
-        {% endblock %}
-    </body>
+    </nav>
+    
+    
+    <hr> 
+    {% block body %} 
+    {% endblock %}
+</body>
+
 </html>
