@@ -25,7 +25,7 @@
                                     <h5 class="card-title">
                                         {{ listing.title }}
                                     </h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">Price: {{ listing.starting_bid }}</h6>
+                                    <h6 class="card-subtitle mb-2 text-muted">Price: {{ listing.price }}</h6>
                                     <p class="card-text">{{ listing.description }}</p>
                                     <p class="card-text">{{ listing.category }}</p>
                                     <p class="card-text"><small class="text-muted">published: {{ listing.date_created }}</small></p>
@@ -66,7 +66,7 @@
                         <h5>Bidding history</h5>
                         {% for bid in listing_bids %}
                             <ul>
-                                <li>{{bid.user}} bidded {{ bid.price }}</li>
+                                <li>{{bid.user}} bidded {{ bid.bids }}</li>
                             </ul>
                         {% endfor %}
                     </div>
