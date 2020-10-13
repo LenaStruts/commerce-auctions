@@ -1,0 +1,77 @@
+{% extends "auctions/layout.html" %} 
+{% block body %}
+    <div class="listing">
+        {% if listing.date_created %}
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="row no-gutters">
+                            <div class="col-md-5">
+                                <img src="{{ listing.image }}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card-body">
+                                    {% if user.is_authenticated %}
+                                            {% if listing_added is True %}
+                                                <div class="add">
+                                                    <a class="btn btn-secondary float-right" href="{% url 'watchlist_remove' pk=listing.pk %}" role="button" alt="Remove from Watchlist"><i class="fas fa-minus"></i></a>
+                                                </div>
+                                            {% else %}
+                                                <div class="remove">
+                                                    <a class="btn btn-secondary float-right" href="{% url 'watchlist_add' pk=listing.pk %}" role="button" alt="Add to Watchlist"><i class="fas fa-plus"></i></a>
+                                                </div>
+                                            {% endif %}
+                                    {% endif %}
+                                    <h5 class="card-title">
+                                        {{ listing.title }}
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Price: {{ listing.starting_bid }}</h6>
+                                    <p class="card-text">{{ listing.description }}</p>
+                                    <p class="card-text">{{ listing.category }}</p>
+                                    <p class="card-text"><small class="text-muted">published: {{ listing.date_created }}</small></p>
+                                    {% if is_winner %}
+                                        <p class="card-text">Congratulations, you won!</p>
+                                    {% endif %} 
+                                </div>
+                                <div class="card-footer">
+                                    {% if listing.active is True %}
+                                        {% if listing.user == request.user %}
+                                            <a href="{% url 'close' pk=listing.pk %}" class="btn btn-secondary">Close</a>
+                                        {% elif user.is_authenticated %}
+                                            <a href="{% url 'bid' pk=listing.pk %}" class="btn btn-secondary">Bid Now!</a>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if user.is_authenticated %}
+                                        <a class="btn btn-secondary" href="{% url 'add_comment' pk=listing.pk %}">Add comment</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comments">
+                        <h5>Comments</h5>
+                        {% for comment in listing.comments.all %}
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ comment.user }}</h5>
+                                    <p class="card-text">{{ comment.message }}</p>
+                                    <p class="card-text"><small class="text-muted">{{ comment.published_date }}</small></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="bids">
+                        <h5>Bidding history</h5>
+                        {% for bid in listing_bids %}
+                            <ul>
+                                <li>{{bid.user}} bidded {{ bid.price }}</li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
