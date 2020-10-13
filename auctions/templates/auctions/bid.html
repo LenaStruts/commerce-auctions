@@ -1,0 +1,12 @@
+{% extends "auctions/layout.html" %} 
+{% load crispy_forms_tags %} 
+{% block body %}
+
+<h2>Place bid</h2>
+<form method="POST">
+    {% csrf_token %} 
+    {{ form.bids|as_crispy_field }}
+    <button type="submit" class="save btn btn-primary">Save</button>
+</form>
+
+{% endblock %}
