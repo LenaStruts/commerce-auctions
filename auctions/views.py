@@ -73,9 +73,7 @@ def listing_detail(request, pk):
     listing_bids = Bid.objects.filter(listing=listing)
     if listing.active == False:
         max_bid = Bid.objects.filter(listing=listing).order_by('-bids')[0]
-        print(max_bid)
         winner = max_bid.user
-        print(winner)
         current_user = request.user
         if current_user == winner:
             return render(request, "auctions/listing_detail.html", {
@@ -89,8 +87,6 @@ def listing_detail(request, pk):
             })
     else:
         listing_user = request.user
-        print(listing)
-        print(Watchlist.objects.filter(user=listing_user, listing = listing).exists())
         if Watchlist.objects.filter(user=listing_user, listing=listing).exists():
             listing_added = True
         else:
@@ -114,3 +110,79 @@ def new_listing(request):
     else:
         form = ListingForm()
     return render(request, "auctions/edit.html", {'form': form})
+
+
+def add_comment(request, pk):
+    listing = get_object_or_404(Listing, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.listing = listing
+            comment.user = request.user
+            comment.published_date = timezone.now()
+            comment.save()
+            return redirect('listing_detail', pk=listing.pk)
+    else:
+        form = CommentForm()
+    return render(request, "auctions/add_comment.html", {'form': form})
+
+
+def categories(request):
+    categories = Listing.Categories
+    return render(request, "auctions/categories.html", {"categories": categories})
+
+def category(request, category):
+    cat_listings = Listing.objects.filter(category=category)
+    return render(request, "auctions/category.html", {"cat_listings": cat_listings})
+
+def watchlist(request):
+    watchlist = Watchlist.objects.filter(user=request.user)
+    return render(request, "auctions/watchlist.html", {"watchlist": watchlist})
+
+def watchlist_add(request, pk):
+    listing_to_add = get_object_or_404(Listing, pk=pk)
+    if Watchlist.objects.filter(user=request.user, listing=listing_to_add).exists():
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        user_list, created = Watchlist.objects.get_or_create(user=request.user, listing=listing_to_add)
+        return render(request, "auctions/watchlist.html")
+
+def watchlist_remove(request, pk):
+    listing_to_remove = get_object_or_404(Listing, pk=pk)
+    item = Watchlist.objects.filter(user=request.user, listing=listing_to_remove)
+    if item.exists():
+        item.delete()
+        return redirect('listing_detail', pk=listing_to_remove.pk)
+    else: 
+        return HttpResponseRedirect(reverse("index"))
+
+
+def bid(request, pk):
+    listing_to_bid = get_object_or_404(Listing, pk=pk)
+    listing_to_bid_price = listing_to_bid.starting_bid
+    if request.method == "POST":
+        form = BidForm(request.POST)
+        if form.is_valid():
+            bid = form.save(commit=False)
+            bid.listing = listing_to_bid
+            bid.user = request.user
+            bid.bid_time = timezone.now()
+            if int(request.POST.get("bids")) > listing_to_bid.price:
+                bid.bids = int(request.POST.get("bids"))
+                listing_to_bid.price = bid.bids
+                bid.save()
+                listing_to_bid.save()
+            return redirect('listing_detail', pk=listing_to_bid.pk)
+    else:
+        form = BidForm()
+    return render(request, "auctions/bid.html", {'form': form})  
+
+
+def close(request, pk):
+    listing_to_close = get_object_or_404(Listing, pk=pk)
+    logged_user = request.user
+    if logged_user == listing_to_close.user:
+        listing_to_close.active = False
+        listing_to_close.save()
+    return HttpResponseRedirect(reverse("index"))
