@@ -1,0 +1,10 @@
+body {
+    padding: 10px;
+    background-color: #f3f3f3;
+    color: #242424;
+}
+
+.nav-link {
+    color: #242424;
+    font-weight: bold;
+}
