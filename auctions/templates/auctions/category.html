@@ -1,6 +1,6 @@
 {% extends "auctions/layout.html" %} 
 {% block body %}
-    <h2>Category</h2>
+    <h2>Category: {{ c }}</h2>
     <div class="row">
         {% for item in cat_listings %}
             {% if item.active is True %}
@@ -15,7 +15,7 @@
                                 <h5 class="card-title">
                                     <a href="{% url 'listing_detail' pk=item.pk %}">{{ item.title }}</a>
                                 </h5>
-                                <p class="card-text">Price: {{ item.starting_bid }}</p>
+                                <p class="card-text">Price: {{ item.price }}</p>
                                 <p class="card-text"><small class="text-muted">published: {{ item.date_created }}</small></p>
                             </div>
                         </div>

@@ -14,7 +14,7 @@
                             <h5 class="card-title">
                                 <a href="{% url 'listing_detail' pk=w.listing.pk %}">{{ w.listing.title }}</a>
                             </h5>
-                            <p class="card-text">Price: {{ w.listing.starting_bid }}</p>
+                            <p class="card-text">Price: {{ w.listing.price }}</p>
                             <p class="card-text"><small class="text-muted">published: {{ w.listing.date_created }}</small></p>
                         </div>
                     </div>

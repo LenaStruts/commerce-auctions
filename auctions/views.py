@@ -86,16 +86,22 @@ def listing_detail(request, pk):
                 'listing_bids': listing_bids,
             })
     else:
-        listing_user = request.user
-        if Watchlist.objects.filter(user=listing_user, listing=listing).exists():
-            listing_added = True
+        if request.user.is_authenticated:
+            listing_user = request.user
+            if Watchlist.objects.filter(user=listing_user, listing=listing).exists():
+                listing_added = True
+            else:
+                listing_added = False
+            return render(request, "auctions/listing_detail.html", {
+                'listing': listing,
+                'listing_bids': listing_bids,
+                'listing_added': listing_added
+            })
         else:
-            listing_added = False
-        return render(request, "auctions/listing_detail.html", {
-            'listing': listing,
-            'listing_bids': listing_bids,
-            'listing_added': listing_added
-        })
+            return render(request, "auctions/listing_detail.html", {
+                'listing': listing,
+                'listing_bids': listing_bids
+            })
 
 
 def new_listing(request):
@@ -134,7 +140,11 @@ def categories(request):
 
 def category(request, category):
     cat_listings = Listing.objects.filter(category=category)
-    return render(request, "auctions/category.html", {"cat_listings": cat_listings})
+    categories = Listing.Categories
+    for cat in categories:
+        if cat.value == category:
+            c = cat.label
+    return render(request, "auctions/category.html", {"cat_listings": cat_listings, "c": c})
 
 def watchlist(request):
     watchlist = Watchlist.objects.filter(user=request.user)
@@ -142,11 +152,12 @@ def watchlist(request):
 
 def watchlist_add(request, pk):
     listing_to_add = get_object_or_404(Listing, pk=pk)
+    watchlist = Watchlist.objects.filter(user=request.user)
     if Watchlist.objects.filter(user=request.user, listing=listing_to_add).exists():
         return HttpResponseRedirect(reverse("index"))
     else:
         user_list, created = Watchlist.objects.get_or_create(user=request.user, listing=listing_to_add)
-        return render(request, "auctions/watchlist.html")
+        return render(request, "auctions/watchlist.html", {"watchlist": watchlist})
 
 def watchlist_remove(request, pk):
     listing_to_remove = get_object_or_404(Listing, pk=pk)
