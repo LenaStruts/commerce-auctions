@@ -2,6 +2,9 @@ from django.urls import path
 
 from . import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path("", views.index, name="index"),
     path("login", views.login_view, name="login"),
@@ -17,4 +20,4 @@ urlpatterns = [
     path("listing/<int:pk>/watchlist_remove/", views.watchlist_remove, name="watchlist_remove"),
     path("listing/<int:pk>/bid/", views.bid, name="bid"),
     path("listing/<int:pk>/close", views.close, name="close"),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
