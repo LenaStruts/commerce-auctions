@@ -1,2 +1,70 @@
-# commerce-auctions
-In this project I worked on creating an auction website using Django framework. On the main page there are active listings cards with some information like title, price and date published. To get more information about particular listing you can go to the listing page. There, it is possible to bid on the listing, see the history of bids, add a comment and view previous comments and add or remove an item to the watchlist. On the watchlist page you can look at your favorite listings and see if your bid won. In the app navigation there is an option for creating new listings, which will be shown at the active listings page. In addition, if you are looking for an item in particular category you can visit category page to see the listings categorized. To add some styles to my page I used Font Awesome glyphicons and Bootstrap framework. In particular navigation bar, listing cards and list of categories are Bootstrap components I used. The auction app is deployed at Heroku using it’s Postgres database.
+# Auctions
+> In this project I worked on creating an auction website using Django framework. 
+
+## Table of contents
+* [General info](#general-info)
+* [Screenshots](#screenshots)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Features](#features)
+* [Status](#status)
+* [Inspiration](#inspiration)
+* [Contact](#contact)
+
+## General info
+The purpose of this project is to design an eBay-like e-commerce auction site using Django framework. 
+
+## Screenshots
+![Screenshot1](https://user-images.githubusercontent.com/61382735/96607367-953e2780-12f8-11eb-9204-cb7d5510636b.png)
+![Screenshot2](https://user-images.githubusercontent.com/61382735/96607975-2e6d3e00-12f9-11eb-920a-319115ca85e3.png)
+
+## Main technologies
+* Python - version 3.6
+* Django - version 3.1
+* Gunicorn - version 20.0
+* Postgres - version 12.4
+
+## Setup
+```
+python3 -m venv myvenv
+source myvenv/bin/activate
+pip install -r requirements.txt
+```
+
+Create .env file such as: 
+```
+POSTGRES_ENGINE=django.db.backends.postgresql_psycopg2
+POSTGRES_NAME=<your_postgres_name>
+POSTGRES_USER=<your_postgres_username>
+POSTGRES_PASSWORD=<your_postgres_password>
+POSTGRES_HOST=<your_postgres_url>
+POSTGRES_PORT=<your_postgres_port>
+DJANGO_SECRET_KEY=<your_django_secret_key>
+```
+
+```
+python manage.py makemigrations auctions
+python manage.py migrate
+python manage.py runserver
+
+```
+See your website at:
+[http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+## Features
+* View active listings, add or remove them from the watchlist, look at the comments and previous bids
+* Create your own listings and close the auction, when you get the desired bid
+* Bid and comment on listings you like, and win the auction with the highest bid
+
+To-do list:
+* improve design 
+* improve responsiveness, in particular for mobile devices
+
+## Status
+Project is paused, because it fullfills the requirements of the course, but some changes to be done to improve functionality and design.
+
+## Inspiration
+This project is part of the Harvard course I am taking, in particular CS50’s Web Programming with Python and JavaScript, project 2 - commerce
+
+## Contact
+Created by [Lena Struts](https://www.linkedin.com/in/lena-yeliena-struts-5aa96292/) - feel free to contact me!
