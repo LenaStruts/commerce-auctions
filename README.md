@@ -18,11 +18,12 @@ The purpose of this project is to design an eBay-like e-commerce auction site us
 ![Screenshot1](https://user-images.githubusercontent.com/61382735/96607367-953e2780-12f8-11eb-9204-cb7d5510636b.png)
 ![Screenshot2](https://user-images.githubusercontent.com/61382735/96607975-2e6d3e00-12f9-11eb-920a-319115ca85e3.png)
 
-## Main technologies
+## Technologies
 * Python - version 3.6
 * Django - version 3.1
 * Gunicorn - version 20.0
 * Postgres - version 12.4
+* Bootstrap4
 
 ## Setup
 ```
