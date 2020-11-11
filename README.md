@@ -15,7 +15,7 @@
 The purpose of this project is to design an eBay-like e-commerce auction site using Django framework. 
 
 ## Screenshots
-![Screenshot1](https://user-images.githubusercontent.com/61382735/96607367-953e2780-12f8-11eb-9204-cb7d5510636b.png)
+![Screenshot1](https://user-images.githubusercontent.com/61382735/98832278-eb584380-243c-11eb-9cbb-4404d268d8fb.png)
 ![Screenshot2](https://user-images.githubusercontent.com/61382735/96607975-2e6d3e00-12f9-11eb-920a-319115ca85e3.png)
 
 ## Technologies
