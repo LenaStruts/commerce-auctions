@@ -3,7 +3,7 @@
     <h2>Watchlist</h2>
     <div class="row">
         {% for w in watchlist %}
-        <div class="col-lg-6 col-sm-12">
+        <div class="col-lg-6 col-sm-12 d-flex align-items-stretch">
             <div class="card mb-4" style="max-width: 700px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
@@ -12,10 +12,10 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{% url 'listing_detail' pk=w.listing.pk %}">{{ w.listing.title }}</a>
+                                <a class="listing-detail" href="{% url 'listing_detail' pk=w.listing.pk %}">{{ w.listing.title }}</a>
                             </h5>
-                            <p class="card-text">Price: {{ w.listing.price }}</p>
-                            <p class="card-text"><small class="text-muted">published: {{ w.listing.date_created }}</small></p>
+                            <h6 class="card-subtitle mb-2 text-muted">Price: {{ w.listing.price }}</h6>
+                            <p class="card-text">{{ w.listing.description }}</p>
                         </div>
                     </div>
                 </div>

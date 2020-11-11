@@ -4,7 +4,7 @@
     <div class="row">
         {% for item in cat_listings %}
             {% if item.active is True %}
-            <div class="col-lg-6 col-sm-12">
+            <div class="col-lg-6 col-sm-12 d-flex align-items-stretch">
                 <div class="card mb-4" style="max-width: 700px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
@@ -13,10 +13,10 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <a href="{% url 'listing_detail' pk=item.pk %}">{{ item.title }}</a>
+                                    <a class="listing-detail" href="{% url 'listing_detail' pk=item.pk %}">{{ item.title }}</a>
                                 </h5>
-                                <p class="card-text">Price: {{ item.price }}</p>
-                                <p class="card-text"><small class="text-muted">published: {{ item.date_created }}</small></p>
+                                <h6 class="card-subtitle mb-2 text-muted">Price: {{ item.price }}</h6>
+                                <p class="card-text">{{ item.description }}</p>
                             </div>
                         </div>
                     </div>

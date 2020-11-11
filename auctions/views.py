@@ -184,7 +184,15 @@ def bid(request, pk):
                 listing_to_bid.price = bid.bids
                 bid.save()
                 listing_to_bid.save()
-            return redirect('listing_detail', pk=listing_to_bid.pk)
+                return redirect('listing_detail', pk=listing_to_bid.pk)
+            else:
+                success = False
+                form = BidForm()
+                return render(request, "auctions/bid.html", {
+                    'form': form, 
+                    'success': success, 
+                    'listing_to_bid': listing_to_bid
+                }) 
     else:
         form = BidForm()
     return render(request, "auctions/bid.html", {'form': form})  

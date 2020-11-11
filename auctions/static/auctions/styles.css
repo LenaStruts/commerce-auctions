@@ -8,3 +8,15 @@ body {
     color: #242424;
     font-weight: bold;
 }
+
+.listing-detail {
+    color: #67789d;
+}
+
+.listing-detail:hover {
+    color: #67789d;
+}
+
+li .listing-detail {
+    font-size: larger;
+}

@@ -3,10 +3,15 @@
 {% block body %}
 
 <h2>Place bid</h2>
+{% if success is False %}
+    <div class="alert alert-secondary" role="alert">
+        Your bid should be higher than {{ listing_to_bid.price }}!
+    </div>
+{% endif %}
 <form method="POST">
     {% csrf_token %} 
     {{ form.bids|as_crispy_field }}
-    <button type="submit" class="save btn btn-primary">Save</button>
+    <button type="submit" class="save btn btn-secondary">Save</button>
 </form>
 
 {% endblock %}
